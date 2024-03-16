@@ -6,7 +6,7 @@ require('dotenv').config({
     path: path.join(__dirname, 'dev.env')
 })
 const app = express();
-const expressPORT = process.env.PORT || 8000;
+const expressPORT =  8000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -40,9 +40,11 @@ app.post('/login', async (req, res) => {
                     redirectUrl = '/superAdmin';
                 } else if (userRole === 'faculty') {
                     redirectUrl = '/faculty';
-                } else if (userRole === 'admin') {
-                    redirectUrl = '/admin';
-                } else {
+                } else if (userRole === 'CSadmin') {
+                    redirectUrl = '/Csadmin';
+                }else if (userRole === 'ISadmin') {
+                    redirectUrl = '/Isadmin';
+                }else {
                     // Handle other roles or scenarios
                     res.status(401).json({ error: 'Unauthorized role' });
                     return;
@@ -59,6 +61,9 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.get("/login", function (req, res) {
+    res.send('Welcome to postgres');
+})
 
 app.listen(8000, (req, res) => {
     console.log(`server listening on ${expressPORT}`);
